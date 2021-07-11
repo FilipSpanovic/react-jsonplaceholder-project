@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { PostsContext } from "context/Posts/PostsProvider";
 
-export function usePosts() {
+export const usePosts = () => {
   const context = useContext(PostsContext);
 
   if (!context) {
@@ -9,4 +9,4 @@ export function usePosts() {
   }
 
   return context;
-}
+};

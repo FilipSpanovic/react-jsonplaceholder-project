@@ -20,11 +20,10 @@ function App() {
             />
             <Route
               path="/post/:id"
-              component={Post}
               render={(props) => (
                 <Post propsMessage={propsMessage} {...props} />
               )}
-            ></Route>
+            />
           </PostsProvider>
         </Switch>
       </Router>
