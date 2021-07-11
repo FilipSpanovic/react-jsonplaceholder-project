@@ -1,23 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { PostsProvider } from "context";
+import { Post, Posts } from "pages";
 
 function App() {
+  const propsMessage = "Hello from";
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <Switch>
+          <PostsProvider propsMessage={propsMessage}>
+            <Route
+              exact
+              path="/posts"
+              render={(props) => (
+                <Posts propsMessage={propsMessage} {...props} />
+              )}
+            />
+            <Route
+              path="/post/:id"
+              component={Post}
+              render={(props) => (
+                <Post propsMessage={propsMessage} {...props} />
+              )}
+            ></Route>
+          </PostsProvider>
+        </Switch>
+      </Router>
     </div>
   );
 }
