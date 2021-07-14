@@ -1,10 +1,10 @@
-import React, { useEffect, useMemo, Fragment } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { PostsAPI } from "api/PostsAPI";
 import { PostSection, CommentSection } from "components";
 import { useForm, usePosts } from "hooks";
 import { Search } from "components/Posts/Search";
 
-export const Posts = ({ propsMessage }) => {
+export const Posts = ({ propsMessage, history }) => {
   const [posts, setPosts] = usePosts();
 
   const {
@@ -19,12 +19,26 @@ export const Posts = ({ propsMessage }) => {
     posts.length === 0 && PostsAPI.fetchPostsCommentsAndUsers(setPosts);
   }, [setPosts, posts.length]);
 
+  const handleRedirectToPost = useCallback((post) => () => {
+    console.log(post);
+    history.push({
+      pathname: `/post/${post.id}`,
+      state: { ...post, propsMessage },
+    });
+  }, []);
+
   const constructPosts = useMemo(
     () =>
-      posts.map(
-        ({ title, user, body, comments, id }) =>
+      posts.map((post) => {
+        const { title, user, body, comments, id } = post;
+
+        return (
           user.username.toLowerCase().includes(search.toLowerCase()) && (
-            <div className="post-comments-card" key={id}>
+            <div
+              onClick={handleRedirectToPost(post)}
+              className="post-comments-card"
+              key={id}
+            >
               <PostSection
                 propsMessage={propsMessage}
                 title={title}
@@ -36,8 +50,9 @@ export const Posts = ({ propsMessage }) => {
               <CommentSection comments={comments} propsMessage={propsMessage} />
             </div>
           )
-      ),
-    [posts, propsMessage, search]
+        );
+      }),
+    [posts, propsMessage, search, handleRedirectToPost]
   );
 
   return (
