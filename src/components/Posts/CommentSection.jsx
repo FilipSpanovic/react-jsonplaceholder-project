@@ -5,10 +5,12 @@ export const CommentSection = ({ comments, propsMessage }) => {
   const componentName = "CommentSection";
   console.log(`${propsMessage} ${componentName}`);
 
+
+
   const constructComments = () =>
-    comments.map(({ email, name, body, id }) => {
+    comments.map(({ email, body, id }) => {
       return (
-        <div className="comment__card" key={id}>
+        <div className="comment__card" key={id} >
           <div className="comment__email">{email} says:</div>
           <div className="comment__body">{body}</div>
         </div>

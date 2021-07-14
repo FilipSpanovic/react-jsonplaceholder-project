@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, Fragment } from "react";
 import { PostsAPI } from "api/PostsAPI";
 import { PostSection, CommentSection } from "components";
 import { useForm, usePosts } from "hooks";
+import { Search } from "components/Posts/Search";
 
 export const Posts = ({ propsMessage }) => {
   const [posts, setPosts] = usePosts();
@@ -15,41 +16,37 @@ export const Posts = ({ propsMessage }) => {
   console.log(`${propsMessage} ${componentName}`);
 
   useEffect(() => {
-    posts.length < 1 && PostsAPI.fetchPostsCommentsAndUsers(setPosts);
+    posts.length === 0 && PostsAPI.fetchPostsCommentsAndUsers(setPosts);
   }, [setPosts, posts.length]);
 
   const constructPosts = useMemo(
     () =>
-      posts.map(({ title, user, body, comments, id }) => {
-        return (
-          <div className="post-comments-card" key={id}>
-            <PostSection
-              propsMessage={propsMessage}
-              title={title}
-              username={user.username}
-              name={user.name}
-              id={id}
-              body={body}
-            />
-            <CommentSection comments={comments} propsMessage={propsMessage} />
-          </div>
-        );
-      }),
-    [posts, propsMessage]
+      posts.map(
+        ({ title, user, body, comments, id }) =>
+          user.username.toLowerCase().includes(search.toLowerCase()) && (
+            <div className="post-comments-card" key={id}>
+              <PostSection
+                propsMessage={propsMessage}
+                title={title}
+                username={user.username}
+                name={user.name}
+                id={id}
+                body={body}
+              />
+              <CommentSection comments={comments} propsMessage={propsMessage} />
+            </div>
+          )
+      ),
+    [posts, propsMessage, search]
   );
 
   return (
     <div className="posts-container">
-      <div className="search">
-        <input
-          className="search__input"
-          placeholder="Search by username"
-          name="search"
-          value={search}
-          onChange={handleInputChange}
-        />
-      </div>
-
+      <Search
+        search={search}
+        handleInputChange={handleInputChange}
+        propsMessage={propsMessage}
+      />
       {constructPosts}
     </div>
   );
