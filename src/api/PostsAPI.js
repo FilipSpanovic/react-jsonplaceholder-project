@@ -9,10 +9,11 @@ export const PostsAPI = {
       const response = await Promise.all(
         urls.map((url) => fetch(`${BASE_URL}${url}`))
       );
+
       const responseJson = await Promise.all(
         response.map((elem) => elem.json())
       );
-      
+
       const posts = merge(responseJson);
 
       setPosts(posts);

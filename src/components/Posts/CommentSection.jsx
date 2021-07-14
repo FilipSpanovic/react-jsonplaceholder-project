@@ -1,19 +1,20 @@
-import React from "react";
+import React, { Fragment } from "react";
 import PropTypes from "prop-types";
+import { Card } from "components";
 
-export const CommentSection = ({ comments, propsMessage }) => {
+export const CommentSection = ({ comments, propsMessage, id }) => {
   const componentName = "CommentSection";
   console.log(`${propsMessage} ${componentName}`);
-
-
 
   const constructComments = () =>
     comments.map(({ email, body, id }) => {
       return (
-        <div className="comment__card" key={id} >
-          <div className="comment__email">{email} says:</div>
-          <div className="comment__body">{body}</div>
-        </div>
+        <Fragment key={id}>
+          <Card>
+            <Card.Item className="comment__email">{email} says:</Card.Item>
+            <Card.Item className="comment__body">{body}</Card.Item>
+          </Card>
+        </Fragment>
       );
     });
 

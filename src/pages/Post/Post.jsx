@@ -1,9 +1,13 @@
 import React from "react";
 import { PostSection, CommentSection } from "components";
 
-export const Post = ({ location }) => {
-  
-  let { propsMessage, title, user, id, body, comments } = location.state;
+export const Post = ({ location, history }) => {
+  if (!location.state) {
+    history.push("/posts");
+    return <></>;
+  }
+
+  const { propsMessage, title, user, id, body, comments } = location.state;
 
   return (
     <div>
@@ -16,7 +20,11 @@ export const Post = ({ location }) => {
           id={id}
           body={body}
         />
-        <CommentSection comments={comments} propsMessage={propsMessage} />
+        <CommentSection
+          comments={comments}
+          id={id}
+          propsMessage={propsMessage}
+        />
       </div>
     </div>
   );

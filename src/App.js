@@ -1,5 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import { PostsProvider } from "context";
 import { Post, Posts } from "pages";
 import { Layout } from "hoc/Layout";
@@ -11,8 +16,8 @@ function App() {
     <div className="App">
       <Router>
         <Switch>
-          <PostsProvider propsMessage={propsMessage}>
-            <Layout>
+          <Layout>
+            <PostsProvider propsMessage={propsMessage}>
               <Route
                 exact
                 path="/posts"
@@ -20,14 +25,19 @@ function App() {
                   <Posts propsMessage={propsMessage} {...props} />
                 )}
               />
+
               <Route
                 path="/post/:id"
                 render={(props) => (
                   <Post propsMessage={propsMessage} {...props} />
                 )}
               />
-            </Layout>
-          </PostsProvider>
+            </PostsProvider>
+
+            <Route path="">
+              <Redirect to="/posts" />
+            </Route>
+          </Layout>
         </Switch>
       </Router>
     </div>

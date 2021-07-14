@@ -1,8 +1,7 @@
 import React, { useCallback, useEffect, useMemo } from "react";
 import { PostsAPI } from "api/PostsAPI";
-import { PostSection, CommentSection } from "components";
+import { PostSection, CommentSection, Search } from "components";
 import { useForm, usePosts } from "hooks";
-import { Search } from "components/Posts/Search";
 
 export const Posts = ({ propsMessage, history }) => {
   const [posts, setPosts] = usePosts();
@@ -19,41 +18,43 @@ export const Posts = ({ propsMessage, history }) => {
     posts.length === 0 && PostsAPI.fetchPostsCommentsAndUsers(setPosts);
   }, [setPosts, posts.length]);
 
-  const handleRedirectToPost = useCallback((post) => () => {
-    console.log(post);
-    history.push({
-      pathname: `/post/${post.id}`,
-      state: { ...post, propsMessage },
-    });
-  }, []);
-
-  const constructPosts = useMemo(
-    () =>
-      posts.map((post) => {
-        const { title, user, body, comments, id } = post;
-
-        return (
-          user.username.toLowerCase().includes(search.toLowerCase()) && (
-            <div
-              onClick={handleRedirectToPost(post)}
-              className="post-comments-card"
-              key={id}
-            >
-              <PostSection
-                propsMessage={propsMessage}
-                title={title}
-                username={user.username}
-                name={user.name}
-                id={id}
-                body={body}
-              />
-              <CommentSection comments={comments} propsMessage={propsMessage} />
-            </div>
-          )
-        );
-      }),
-    [posts, propsMessage, search, handleRedirectToPost]
+  const handleRedirectToPost = useCallback(
+    (post) => () => {
+      history.push({
+        pathname: `/post/${post.id}`,
+        state: { ...post, propsMessage },
+      });
+    },
+    [history, propsMessage]
   );
+
+  const constructPosts = useMemo(() => {
+    return posts.map((post) => {
+      const { title, user, body, comments, id } = post;
+      const isSearchIncluded = user.username
+        .toLowerCase()
+        .includes(search.toLowerCase());
+
+      return (
+        isSearchIncluded && (
+          <div
+            key={id}
+            onClick={handleRedirectToPost(post)}
+            className="post-comments-card"
+          >
+            <PostSection
+              propsMessage={propsMessage}
+              title={title}
+              username={user.username}
+              name={user.name}
+              body={body}
+            />
+            <CommentSection comments={comments} propsMessage={propsMessage} />
+          </div>
+        )
+      );
+    });
+  }, [posts, propsMessage, search, handleRedirectToPost]);
 
   return (
     <div className="posts-container">
@@ -66,3 +67,4 @@ export const Posts = ({ propsMessage, history }) => {
     </div>
   );
 };
+

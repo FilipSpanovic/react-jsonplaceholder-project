@@ -7,7 +7,10 @@ export function PostsProvider(props) {
   const componentName = "PostsProvider";
   console.log(`${props.propsMessage} ${componentName}`);
 
-  const value = useMemo(() => [posts, setPosts], [posts]);
+  const value = useMemo(() => {
+    return [posts, setPosts];
+  }, [posts]);
 
   return <PostsContext.Provider value={value} {...props} />;
 }
+
