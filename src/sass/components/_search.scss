@@ -1,0 +1,33 @@
+.search {
+  display: flex;
+  height: auto;
+  width: 100vw;
+  flex-direction: row;
+  justify-content: center;
+  padding-bottom: 2rem;
+
+
+  &__input {
+    padding: 0.7rem 2rem;
+    border: solid 1.5px #d3d3d3;
+
+    border-radius: 5px;
+    border-color: none;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+      rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    width: 20%;
+    transition: all 0.2s;
+
+    &:focus {
+      outline: none;
+      width: 20.5%;
+      box-shadow: rgba(60, 64, 67, 0.15) 1px 2px 3px 1px,
+      rgba(60, 64, 67, 0.15) 2px 2px 4px 2px;
+    }
+
+    &::-webkit-input-placeholder {
+      font-weight: 300;
+      color: #a5a5a5;
+    }
+  }
+}

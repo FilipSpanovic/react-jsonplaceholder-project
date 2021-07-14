@@ -1,5 +1,5 @@
-//reduce comments array to a lookup object where keys represent postId and value equals to an array of comments
-//if key is not present in the object, create one and assign an array to it with a single comment
+//reduce comments array to a lookup object where keys represent postIds and value equals to an array of comments
+//if key is not present in the object, create one and assign an array to it with a single element
 //if key is present, spread the array with existing comment(s) and push a new element to it
 const commentsReducer = (acc, comment) => {
   if (!acc[comment.postId]) {

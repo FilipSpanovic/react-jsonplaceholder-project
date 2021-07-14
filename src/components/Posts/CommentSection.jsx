@@ -8,16 +8,19 @@ export const CommentSection = ({ comments, propsMessage }) => {
   const constructComments = () =>
     comments.map(({ email, name, body, id }) => {
       return (
-        <li key={id}>
-          <p>
-            {email} {name}
-          </p>
-          <p>{body}</p>
-        </li>
+        <div className="comment__card" key={id}>
+          <div className="comment__email">{email} says:</div>
+          <div className="comment__body">{body}</div>
+        </div>
       );
     });
 
-  return <ul>{constructComments()}</ul>;
+  return (
+    <div className="comment">
+      <h2 className="comment__title">Comments:</h2>
+      {constructComments()}
+    </div>
+  );
 };
 
 CommentSection.propTypes = {
