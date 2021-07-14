@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from "react";
+
 export const PostsContext = React.createContext();
 
 export function PostsProvider(props) {

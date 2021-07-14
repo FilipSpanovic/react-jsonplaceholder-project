@@ -7,7 +7,6 @@ import {
 } from "react-router-dom";
 import { PostsProvider } from "context";
 import { Post, Posts } from "pages";
-import { Layout } from "hoc/Layout";
 
 function App() {
   const propsMessage = "Hello from";
@@ -16,7 +15,6 @@ function App() {
     <div className="App">
       <Router>
         <Switch>
-          <Layout>
             <PostsProvider propsMessage={propsMessage}>
               <Route
                 exact
@@ -37,7 +35,6 @@ function App() {
             <Route path="">
               <Redirect to="/posts" />
             </Route>
-          </Layout>
         </Switch>
       </Router>
     </div>

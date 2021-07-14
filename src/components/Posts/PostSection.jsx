@@ -2,13 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Card } from "components";
 
-export const PostSection = ({
-  title,
-  body,
-  username,
-  name,
-  propsMessage,
-}) => {
+export const PostSection = ({ title, body, username, name, propsMessage }) => {
   const componentName = "PostSection";
   console.log(`${propsMessage} ${componentName}`);
 
@@ -36,4 +30,8 @@ export const PostSection = ({
 
 PostSection.propTypes = {
   title: PropTypes.string.isRequired,
+  body: PropTypes.string.isRequired,
+  username: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  propsMessage: PropTypes.string.isRequired,
 };
